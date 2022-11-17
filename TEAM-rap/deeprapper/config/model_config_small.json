@@ -10,5 +10,9 @@
   "n_finals": 32,
   "n_pos": 1032,
   "n_beats": 1024,
-  "vocab_size": 16000
+  "vocab_size": 16000,
+  "scale_attn_weights": true,
+  "scale_attn_by_inverse_layer_idx": false,
+  "reorder_and_upcast_attn": false
+
 }

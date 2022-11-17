@@ -136,7 +136,9 @@ def main():
         if args.raw:
             print('Processing from raw data...')
             prepare_fn = {
-                'lyrics': prepare_lyrics
+                'lyrics': prepare_lyrics,
+                'team_lyrics': prepare_lyrics
+
             }
             prepare_fn[key](
                 ins_path=os.path.join(args.root_path, args.raw_data_dir, 'raw'),  # demo: data/lyrics/lyrics_22w/raw

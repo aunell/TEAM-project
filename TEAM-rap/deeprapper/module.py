@@ -207,7 +207,7 @@ class GPT2Model(GPT2PreTrainedModel):
         self.wbe = nn.Embedding(config.n_beats, config.n_embd)
 
         self.drop = nn.Dropout(config.embd_pdrop)
-        self.h = nn.ModuleList([GPT2Block(config.n_ctx, config, scale=True) for _ in range(config.n_layer)])
+        self.h = nn.ModuleList([GPT2Block(config) for _ in range(config.n_layer)])
         self.ln_f = nn.LayerNorm(config.n_embd, eps=config.layer_norm_epsilon)
 
         self.init_weights()
