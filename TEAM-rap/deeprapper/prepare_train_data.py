@@ -557,6 +557,8 @@ def read_lyrics(root_path, reverse=False):
     # process new data
     print('Start to read processed lyrics from dataset....')
     ins_path = os.path.join(root_path, 'lyrics.json')
+    print(ins_path)
+    print(os.listdir('team_lyrics/team_lyrics2/processed'))
     with open(ins_path, encoding='utf8') as ins:
         # enumerate each line in the file
         # each line is an article

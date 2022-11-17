@@ -56,7 +56,7 @@ def main():
     # ways to process data
     parser.add_argument('--encoder_json', default="tokenizations/encoder.json", type=str, help="encoder.json", required=False)
     parser.add_argument('--vocab_bpe', default="tokenizations/vocab.bpe", type=str, help="vocab.bpe", required=False)
-    parser.add_argument('--raw', action='store_true', help='whether the preprocessing is done', required=False)
+    parser.add_argument('--raw', action='store_false', help='whether the preprocessing is done', required=False)
     parser.add_argument('--tokenize', action='store_true', help='whether the tokenization is done', required=False)
     parser.add_argument('--segment', action='store_true', help='do Chinese Word Segmentation or not', required=False)
     parser.add_argument('--bpe_token', action='store_true', help='use subword', required=False)
@@ -148,6 +148,8 @@ def main():
         print('Loading processed data for training...')
         read_fn = {
             'lyrics': read_lyrics,
+            'team_lyrics': read_lyrics,
+
         }
         train_lines, train_finals, train_sentences, train_pos, train_beats = read_fn[key](processed_path, reverse=args.reverse)
 
