@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"name": "TEAM-rap",
+			"path": "."
+		},
+		{
+			"name": "deeprapper",
+			"path": "../deeprapper"
+		},
+		{
+			"name": "MCFlow-master",
+			"path": "../MCFlow-master"
+		}
+	],
+	"settings": {}
+}
