@@ -5,8 +5,8 @@ python train.py \
   --stride 1024 \
   --model_config 'config/model_config_small.json' \
   --model_dir 'model' \
-  --root_path 'data/lyrics/' \
-  --raw_data_dir 'lyrics_samples' \
+  --root_path 'team_lyrics/' \
+  --raw_data_dir 'team_lyrics2' \
   --batch_size 1 \
   --epochs 4 \
   --enable_final \
@@ -18,4 +18,4 @@ python train.py \
   --with_beat \
   --beat_mode 0 \
   --tokenize \
-  --raw  
+  --raw \

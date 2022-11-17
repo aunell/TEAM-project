@@ -9,12 +9,12 @@ import torch
 import torch.nn as nn
 from torch.nn import CrossEntropyLoss
 import warnings
-from transformers.modeling_gpt2 import GPT2PreTrainedModel, Block
+from transformers.models.gpt2.modeling_gpt2 import GPT2PreTrainedModel, GPT2Block
 from transformers.configuration_utils import PretrainedConfig
 from transformers.utils import logging
 from transformers.modeling_outputs import (
     BaseModelOutputWithPastAndCrossAttentions,
-    CausalLMOutputWithPastAndCrossAttentions,
+    CausalLMOutputWithCrossAttentions,
 )
 
 
@@ -207,7 +207,7 @@ class GPT2Model(GPT2PreTrainedModel):
         self.wbe = nn.Embedding(config.n_beats, config.n_embd)
 
         self.drop = nn.Dropout(config.embd_pdrop)
-        self.h = nn.ModuleList([Block(config.n_ctx, config, scale=True) for _ in range(config.n_layer)])
+        self.h = nn.ModuleList([GPT2Block(config.n_ctx, config, scale=True) for _ in range(config.n_layer)])
         self.ln_f = nn.LayerNorm(config.n_embd, eps=config.layer_norm_epsilon)
 
         self.init_weights()
@@ -540,7 +540,7 @@ class GPT2LMHeadModel(GPT2PreTrainedModel):
             output = (lm_logits,) + transformer_outputs[1:]
             return ((loss,) + output) if loss is not None else output
 
-        return CausalLMOutputWithPastAndCrossAttentions(
+        return CausalLMOutputWithCrossAttentions(
             loss=loss,
             logits=lm_logits,
             past_key_values=transformer_outputs.past_key_values,
