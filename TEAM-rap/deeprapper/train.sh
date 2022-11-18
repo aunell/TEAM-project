@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python train.py \
+python3 train.py \
   --device '0,1' \
   --stride 1024 \
   --model_config 'config/model_config_small.json' \

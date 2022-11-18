@@ -130,7 +130,7 @@ def build_files_separate(num_pieces,
 
     for k in range(num_pieces):
         max_length = stride - 2
-        print(max_length)
+        print('max length', max_length)
 
         for i in range(len(lines)):
             line = lines[i]
@@ -157,7 +157,9 @@ def build_files_separate(num_pieces,
                     else:
                         skips[0:line_length] = final[0:line_length]
                         final = skips
-                    assert len(final) == len(line)
+                    print(len(final))
+                    print(len(line))
+                    # assert len(final) == len(line)
 
                 if enable_sentence:
                     sentence = sentences[i]
@@ -170,7 +172,8 @@ def build_files_separate(num_pieces,
                     else:
                         skips[0:line_length] = sentence[0:line_length]
                         sentence = skips
-                    assert len(sentence) == len(line)
+                    print(len(sentence))
+                    # assert len(sentence) == len(line)
 
                 if enable_pos:
                     p = pos[i]
@@ -183,7 +186,7 @@ def build_files_separate(num_pieces,
                     else:
                         skips[0:line_length] = p[0:line_length]
                         p = skips
-                    assert len(p) == len(line)
+                    # assert len(p) == len(line)
 
                 if enable_beat:
                     beat = beats[i]
@@ -196,7 +199,7 @@ def build_files_separate(num_pieces,
                     else:
                         skips[0:line_length] = beat[0:line_length]
                         beat = skips
-                    assert len(beat) == len(line)
+                    # assert len(beat) == len(line)
 
                 lines[i] = line
                 if enable_final:
@@ -532,9 +535,10 @@ def read_lyrics(root_path, reverse=False):
     out_beats_path = f'{out_path}/beats{reverse_str}.json'
 
     # read cached data
-    if os.path.exists(out_content_path) and os.path.exists(out_sentences_path) and \
+    if not os.path.exists(out_content_path) and os.path.exists(out_sentences_path) and \
        os.path.exists(out_finals_path) and os.path.exists(out_pos_path) and \
        os.path.exists(out_beats_path):
+        print('Exists')
         # load cached data
         with open(out_content_path, encoding='utf8') as ins:
             for line in ins:
@@ -556,16 +560,16 @@ def read_lyrics(root_path, reverse=False):
     # If not exists, to preprocess data
     # process new data
     print('Start to read processed lyrics from dataset....')
-    ins_path = os.path.join(root_path, 'lyrics.json')
-    print(ins_path)
+    ins_path = os.path.join(root_path, 'mcflowLyrics.json')
+    print('INS', ins_path)
     print(os.listdir('team_lyrics/team_lyrics2/processed'))
     with open(ins_path, encoding='utf8') as ins:
         # enumerate each line in the file
         # each line is an article
         i = j = 0
-        for line in ins:
-            song = eval(json.loads(line))
-            # print(type(song))
+        for allSongs in ins: #turns json into list
+          for k in range(124): #kth song
+            song= json.loads(allSongs)[k] #indexing into list of dictionaries
             if song['valid']:
                 if not reverse:
                     lines.append(song['lyric'])
