@@ -93,11 +93,11 @@ def main():
         full_tokenizer.max_len = 999999
     else:
         full_tokenizer = tokenization_bert.BertTokenizer(
-            vocab_file=args.tokenizer_path,
+            vocab_file=args.tokenizer_path, # TODO 
             do_lower_case=False
         )
         full_finalizer = tokenization_bert.BertTokenizer(
-            vocab_file=args.finalizer_path,
+            vocab_file=args.finalizer_path, # TODO 
             tokenize_chinese_chars=False,
             do_lower_case=False
         )

@@ -1,0 +1,13 @@
+PHONEMES from the data into this file
+
+[SEP]
+[CLS]
+[MASK]
+[PAD]
+[UNK]
+[BEAT]
+[S]
+[M]
+[F]
+
+all other phonemes 

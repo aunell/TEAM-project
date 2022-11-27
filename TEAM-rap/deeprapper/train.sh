@@ -19,3 +19,5 @@ python3 train.py \
   --beat_mode 0 \
   --tokenize \
   --raw \
+  --finalizer_path 'tokenizations/TEAMfinals.txt' 
+  --tokenizer_path 'tokenizations/TEAM_dicts.txt'

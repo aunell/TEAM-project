@@ -1,0 +1,10 @@
+[SEP]
+[CLS]
+[MASK]
+[PAD]
+[UNK]
+[BEAT]
+All syllables in the MCFlow dataset (broken up individual words w dashes)
+[S]
+[M]
+[F]
