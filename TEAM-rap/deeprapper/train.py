@@ -16,7 +16,7 @@ from utils import swap_value
 
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = argparse.ArgumentParser() 
 
     # path to data
     parser.add_argument('--model_dir', default='model', type=str, required=False, help='directory of learned models')

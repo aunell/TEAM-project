@@ -152,19 +152,21 @@ def build_files_separate(num_pieces,
                     final = full_finalizer.convert_tokens_to_ids(final)
                     skip = full_finalizer.convert_tokens_to_ids('[SKIP]')
                     skips = [skip] * max_length
+                    print('final length', len(final))
+                    print(len(line))
                     if line_length >= max_length:
                         final = final[0:max_length]
                     else:
                         skips[0:line_length] = final[0:line_length]
                         final = skips
-                    print(len(final))
-                    print(len(line))
                     # assert len(final) == len(line)
 
                 if enable_sentence:
                     sentence = sentences[i]
+                    print(len(sentence))
                     sentence = full_sentencer.tokenize(sentence)
                     sentence = full_sentencer.convert_tokens_to_ids(sentence)
+                    print('SENTENCE', sentence)
                     skip = full_sentencer.convert_tokens_to_ids('[SKIP]')
                     skips = [skip] * max_length
                     if line_length >= max_length:
@@ -172,8 +174,7 @@ def build_files_separate(num_pieces,
                     else:
                         skips[0:line_length] = sentence[0:line_length]
                         sentence = skips
-                    print(len(sentence))
-                    # assert len(sentence) == len(line)
+                    assert len(sentence) == len(line)
 
                 if enable_pos:
                     p = pos[i]
@@ -186,7 +187,7 @@ def build_files_separate(num_pieces,
                     else:
                         skips[0:line_length] = p[0:line_length]
                         p = skips
-                    # assert len(p) == len(line)
+                    assert len(p) == len(line)
 
                 if enable_beat:
                     beat = beats[i]
@@ -199,7 +200,7 @@ def build_files_separate(num_pieces,
                     else:
                         skips[0:line_length] = beat[0:line_length]
                         beat = skips
-                    # assert len(beat) == len(line)
+                    assert len(beat) == len(line)
 
                 lines[i] = line
                 if enable_final:

@@ -4,6 +4,15 @@
 [PAD]
 [UNK]
 [BEAT]
+for
+and
+but
+I
+you
+she
+a
+friends
+.
 啡
 食
 苈
