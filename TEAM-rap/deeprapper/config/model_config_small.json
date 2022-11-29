@@ -13,6 +13,7 @@
   "vocab_size": 16000,
   "scale_attn_weights": true,
   "scale_attn_by_inverse_layer_idx": false,
-  "reorder_and_upcast_attn": false
+  "reorder_and_upcast_attn": false,
+  "use_cache": true
 
 }

@@ -130,24 +130,28 @@ def build_files_separate(num_pieces,
 
     for k in range(num_pieces):
         max_length = stride - 2
-        print('max length', max_length)
 
         for i in range(len(lines)):
             line = lines[i]
-            print("🔴 line (from a single song)", len(line.split(" ")))
-            print(line[:100])
-            line = line.replace("-", "Q")
-            line = line.replace("'", "Q")
-            print(line[:100])
+            a=len(line)
+            j=0
+            while j in range(len(line)):
+                if line[j]=='-':
+                    line=line[:j]+line[j+1:]
+                j+=1
+            # line = line.replace("-", "Q") #dont want to replace - with q, we want to combine words
+            line = line.replace("'", "")
+            line = line.replace(".", "")
+            line = line.replace("*>Verse3", "")
+            line = line.replace("*>Verse2", "")
             if len(line) > min_length:
+                print('🔴 line before tokenizer', line[-100:])
                 line = full_tokenizer.tokenize(line)
-                print("🔴 line tokenizer 1", len(line))
                 line = full_tokenizer.convert_tokens_to_ids(line)
-                print("🔴 line tokenizer ID", len(line))
+                print('🔴line after tokenizer', line[:100])
                 line_length = len(line)
+                print(line_length)
                 skip = full_tokenizer.convert_tokens_to_ids('[SKIP]')
-                print('skip', skip)
-                print(max_length)
                 skips = [skip] * max_length
                 if line_length >= max_length:
                     line = line[0:max_length]
@@ -156,50 +160,67 @@ def build_files_separate(num_pieces,
                     line = skips
 
                 if enable_final:
-                    final = finals[i] #final and line tokenized are 30 tokens off
+                    final = finals[i] 
+                    j=0
+                    while j in range(len(final)):
+                        if final[j]=='-':
+                            final=final[:j]+final[j+1:]
+                        j+=1
+                    final = final.replace("'", "")
+                    final = final.replace(".", "")
                     final = full_finalizer.tokenize(final)
                     final = full_finalizer.convert_tokens_to_ids(final)
                     skip = full_finalizer.convert_tokens_to_ids('[SKIP]')
-                    print(skip)
                     skips = [skip] * max_length
-                    print(max_length)
-                    print('final length', len(final))
-                    print(len(line))
                     if line_length >= max_length:
                         final = final[0:max_length]
+                        if len(final)<1022:
+                            final=final+[5]*(1022-len(final))
                     else:
                         skips[0:line_length] = final[0:line_length]
                         final = skips
-                        print('HERE3', len(final))
-
+                        if len(final)<1022:
+                            final=final+[5]*(1022-len(final))
                     assert len(final) == len(line)
 
                 if enable_sentence:
                     sentence = sentences[i]
-                    print(len(sentence))
+                    print('🟡 SENTENCE before tokenizer', sentence[:100])
                     sentence = full_sentencer.tokenize(sentence)
                     sentence = full_sentencer.convert_tokens_to_ids(sentence)
-                    print('SENTENCE', sentence)
+                    print('🟡 SENTENCE after tokenizer', sentence[:100])
+                    print("🟡sentence length",len(sentence))
                     skip = full_sentencer.convert_tokens_to_ids('[SKIP]')
                     skips = [skip] * max_length
+                    print("🔴line length",line_length)
                     if line_length >= max_length:
                         sentence = sentence[0:max_length]
+                        if len(sentence)<1022:
+                            sentence=sentence+[5]*(1022-len(sentence))
                     else:
                         skips[0:line_length] = sentence[0:line_length]
                         sentence = skips
+                        if len(sentence)<1022:
+                            sentence=sentence+[5]*(1022-len(sentence))
                     assert len(sentence) == len(line)
 
                 if enable_pos:
                     p = pos[i]
                     p = full_poser.tokenize(p)
                     p = full_poser.convert_tokens_to_ids(p)
+                    print("🟠pos tokenized", len(p))
                     skip = full_poser.convert_tokens_to_ids('[SKIP]')
                     skips = [skip] * max_length
                     if line_length >= max_length:
                         p = p[0:max_length]
+                        if len(p)<1022:
+                            p=p+[5]*(1022-len(p))
                     else:
                         skips[0:line_length] = p[0:line_length]
                         p = skips
+                    print("🟠pos length", len(p))
+                    if len(p)<1022:
+                        p=p+[5]*(1022-len(p))
                     assert len(p) == len(line)
 
                 if enable_beat:
@@ -213,6 +234,8 @@ def build_files_separate(num_pieces,
                     else:
                         skips[0:line_length] = beat[0:line_length]
                         beat = skips
+                    if len(beat)<1022:
+                        beat=beat+[5]*(1022-len(beat))
                     assert len(beat) == len(line)
 
                 lines[i] = line
