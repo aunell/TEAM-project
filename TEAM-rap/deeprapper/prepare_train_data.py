@@ -134,6 +134,10 @@ def build_files_separate(num_pieces,
 
         for i in range(len(lines)):
             line = lines[i]
+            print("🔴 line (from a single song)", len(line.split(" ")))
+            print(line[:100])
+            line = line.replace("-", "Q")
+            print(line[:100])
             if len(line) > min_length:
                 line = full_tokenizer.tokenize(line)
                 line = full_tokenizer.convert_tokens_to_ids(line)
