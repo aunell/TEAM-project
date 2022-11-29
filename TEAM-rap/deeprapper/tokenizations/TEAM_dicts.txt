@@ -4,7 +4,13 @@
 [PAD]
 [UNK]
 [BEAT]
-All syllables in the MCFlow dataset (broken up individual words w dashes)
+we 
+that
+friends
+-ple
+Qple
+.
+-
 [S]
 [M]
 [F]

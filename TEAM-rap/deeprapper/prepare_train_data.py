@@ -137,12 +137,17 @@ def build_files_separate(num_pieces,
             print("🔴 line (from a single song)", len(line.split(" ")))
             print(line[:100])
             line = line.replace("-", "Q")
+            line = line.replace("'", "Q")
             print(line[:100])
             if len(line) > min_length:
                 line = full_tokenizer.tokenize(line)
+                print("🔴 line tokenizer 1", len(line))
                 line = full_tokenizer.convert_tokens_to_ids(line)
+                print("🔴 line tokenizer ID", len(line))
                 line_length = len(line)
                 skip = full_tokenizer.convert_tokens_to_ids('[SKIP]')
+                print('skip', skip)
+                print(max_length)
                 skips = [skip] * max_length
                 if line_length >= max_length:
                     line = line[0:max_length]
@@ -151,11 +156,13 @@ def build_files_separate(num_pieces,
                     line = skips
 
                 if enable_final:
-                    final = finals[i]
+                    final = finals[i] #final and line tokenized are 30 tokens off
                     final = full_finalizer.tokenize(final)
                     final = full_finalizer.convert_tokens_to_ids(final)
                     skip = full_finalizer.convert_tokens_to_ids('[SKIP]')
+                    print(skip)
                     skips = [skip] * max_length
+                    print(max_length)
                     print('final length', len(final))
                     print(len(line))
                     if line_length >= max_length:
@@ -163,7 +170,9 @@ def build_files_separate(num_pieces,
                     else:
                         skips[0:line_length] = final[0:line_length]
                         final = skips
-                    # assert len(final) == len(line)
+                        print('HERE3', len(final))
+
+                    assert len(final) == len(line)
 
                 if enable_sentence:
                     sentence = sentences[i]
