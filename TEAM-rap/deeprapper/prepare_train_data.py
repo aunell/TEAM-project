@@ -100,6 +100,7 @@ def build_files_separate(num_pieces,
                          enable_beat=False,
                          segment=False):
     print('Start tokenizing..')
+    padNUMBER=0
     assert len(lines) == len(finals) == len(sentences)
     if segment:
         lines = segment_text(lines)
@@ -145,12 +146,12 @@ def build_files_separate(num_pieces,
             line = line.replace("*>Verse3", "")
             line = line.replace("*>Verse2", "")
             if len(line) > min_length:
-                print('🔴 line before tokenizer', line[-100:])
+                # print('🔴 line before tokenizer', line[-100:])
                 line = full_tokenizer.tokenize(line)
                 line = full_tokenizer.convert_tokens_to_ids(line)
-                print('🔴line after tokenizer', line[:100])
+                # print('🔴line after tokenizer', line[:100])
                 line_length = len(line)
-                print(line_length)
+                # print(line_length)
                 skip = full_tokenizer.convert_tokens_to_ids('[SKIP]')
                 skips = [skip] * max_length
                 if line_length >= max_length:
@@ -185,14 +186,14 @@ def build_files_separate(num_pieces,
 
                 if enable_sentence:
                     sentence = sentences[i]
-                    print('🟡 SENTENCE before tokenizer', sentence[:100])
+                    # print('🟡 SENTENCE before tokenizer', sentence[:100])
                     sentence = full_sentencer.tokenize(sentence)
                     sentence = full_sentencer.convert_tokens_to_ids(sentence)
-                    print('🟡 SENTENCE after tokenizer', sentence[:100])
-                    print("🟡sentence length",len(sentence))
+                    # print('🟡 SENTENCE after tokenizer', sentence[:100])
+                    # print("🟡sentence length",len(sentence))
                     skip = full_sentencer.convert_tokens_to_ids('[SKIP]')
                     skips = [skip] * max_length
-                    print("🔴line length",line_length)
+                    # print("🔴line length",line_length)
                     if line_length >= max_length:
                         sentence = sentence[0:max_length]
                         if len(sentence)<1022:
@@ -208,7 +209,7 @@ def build_files_separate(num_pieces,
                     p = pos[i]
                     p = full_poser.tokenize(p)
                     p = full_poser.convert_tokens_to_ids(p)
-                    print("🟠pos tokenized", len(p))
+                    # print("🟠pos tokenized", len(p))
                     skip = full_poser.convert_tokens_to_ids('[SKIP]')
                     skips = [skip] * max_length
                     if line_length >= max_length:
@@ -218,8 +219,11 @@ def build_files_separate(num_pieces,
                     else:
                         skips[0:line_length] = p[0:line_length]
                         p = skips
-                    print("🟠pos length", len(p))
+                    # print("🟠pos length", len(p))
                     if len(p)<1022:
+                        padNUMBER+=1
+                        print('🟠', padNUMBER)
+                        print(1022-len(p))
                         p=p+[5]*(1022-len(p))
                     assert len(p) == len(line)
 
