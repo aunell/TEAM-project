@@ -71,6 +71,7 @@ def _prepare_init_inputs(context, device):
     """
     build initial inputs for the model
     """
+    print('CONTEXT', context)
     context_tokens, context_finals, context_sentences, context_beats, context_poses = context
 
     context_tokens = torch.tensor(context_tokens, dtype=torch.long, device=device).unsqueeze(0)
@@ -300,7 +301,7 @@ def beam_search_decode(model, context, pinyin_dict, args, device='cpu'):
     Return:
         list of samples(ids)
     """
-
+    print('😙, ', context[-5:])
     nodes = _build_init_nodes(context[:5], device)
     tokenizer, finalizer, sentencer, beater, poser = context[-5:]
     if args.dynamic_rhyme:

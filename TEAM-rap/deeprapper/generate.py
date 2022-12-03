@@ -22,13 +22,18 @@ def is_word(word):
 
 
 def _init_pinyin_dict(tokenizer):
+    # return({'friends': 0, 'family,':1, 'etc':2, 'words':3,'fs':4, 'fsadfas':5, 'do':6, 'hello':7, 'op':8, 'look':9})
     print('Initilizing pinyin dict')
+    k=0
     pinyin_dict = {}
+    # print('🟡 tokenizer', tokenizer)
+    # print('🟡 tokenizer', tokenizer.vocab_size)
     for i in range(tokenizer.vocab_size):
         w =  tokenizer.convert_ids_to_tokens(i)
-        pinyin, valid = get_sentence_pinyin_finals(w)
+        pinyin, valid =  w, True#get_sentence_pinyin_finals(w) #pinyin = phoenetic
+        # pinyin_dict[w]=k
+        # k+=1
         if valid:
-            pinyin = pinyin[0]
             if pinyin in pinyin_dict:
                 pinyin_dict[pinyin].append(i)
             else:
@@ -36,10 +41,12 @@ def _init_pinyin_dict(tokenizer):
     
     # display pinyin information
     print(f'Pinyin num: {len(pinyin_dict)}')
-    kv_info = ''
-    for k, v in pinyin_dict.items():
-        kv_info += f'{k}:{len(v)}, '
-    print(kv_info)
+    # print('🔴', pinyin_dict)
+    print('🔴 KEYS', pinyin_dict.keys())
+    # kv_info = ''
+    # for k, v in pinyin_dict.items():
+    #     kv_info += f'{k}:{len(v)}, '
+    # print(kv_info)
     # print(tokenizer.convert_ids_to_tokens(pinyin_dict['UNK']))
     return pinyin_dict
 
@@ -209,7 +216,7 @@ def main():
     context = [context_tokens, context_finals, context_sentences, context_beats, context_poses,
               tokenizer, finalizer, sentencer, beater, poser]
     
-    # print('context:', context)
+    print('context:', context)
     #############################################################
     # Start to generate samples
     #####################################
@@ -217,7 +224,7 @@ def main():
     generated = 0
     for _ in range(args.nsamples):
         outs = generate(model=model, context=context, pinyin_dict=pinyin_dict, args=args, device=device)
-        
+        print('OUTS', outs)
         
         # To display and save samples
         for out in outs:

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-python generate.py \
+python3 generate.py \
                       --device '0' \
                       --length 512 \
                       --batch_size 1 \
@@ -12,13 +12,12 @@ python generate.py \
                       --save_samples \
                       --save_samples_dir 'samples_save_dir' \
                       --samples_sign 'sample_name' \
-                      --model_dir 'model/lyrics/lyrics_samples_reverse/samples/final_model' \
+                      --model_dir 'model/team_lyrics/team_lyrics2_reverse/samples/final_model' \
                       --model_config 'config.json' \
                       --enable_final \
                       --enable_sentence \
                       --enable_relative_pos \
                       --enable_beat \
-                      --prefix '我长大的地方像一个简朴的寨' \
                       --with_beat \
                       --beat_mode 0 \
                       --reverse \
@@ -28,5 +27,5 @@ python generate.py \
                       --dynamic_rhyme \
                       --rhyme_count 1 \
                       --rhyme_prob_bound 1.0 \
-                      --rhyme_alpha 0.95
+                      --rhyme_alpha 0.95 \
 
